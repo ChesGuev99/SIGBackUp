@@ -1,21 +1,20 @@
 ---
-title: "Hello R Markdown"
-author: "Frida Gomam"
-date: 2020-12-01T21:13:14-05:00
+title: "Mapas Estáticos, Estadísticas policiales en Costa Rica"
+author: "Ana Guevara"
+date: 2021-02-02T21:13:14-05:00
 categories: ["R"]
-tags: ["R Markdown", "plot", "regression"]
+tags: []
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(collapse = TRUE)
 ```
 
-# R Markdown
+# GSIG
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+El primer paso para visualizar estos mapas, fue editar el archivo shapefile, con la aplicación QGIS, de la sigiuente forma:
 
-You can embed an R code chunk like this:
-
+![Imagen del las capas](https://github.com/ChesGuev99/SIGBackUp/tree/main/R)\
 ```{r cars}
 summary(cars)
 fit <- lm(dist ~ speed, data = cars)

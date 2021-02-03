@@ -1,9 +1,9 @@
 ---
-title: "Hello R Markdown"
-author: "Frida Gomam"
-date: 2020-12-01T21:13:14-05:00
+title: "Mapas Estáticos, Estadísticas policiales en Costa Rica"
+author: "Ana Guevara"
+date: 2021-02-02T21:13:14-05:00
 categories: ["R"]
-tags: ["R Markdown", "plot", "regression"]
+tags: []
 ---
 
 
@@ -162,7 +162,7 @@ MapaEdad = (tmap::tm_shape(puntosCR)+
 
 
 
-tmap::tmap_arrange(MapaGenero, MapaNacionalidad, MapaEdad, MapaVictima)
+tmap::tmap_arrange(MapaTipoCrimen ,MapaGenero, MapaNacionalidad, MapaEdad, MapaVictima)
 ## Warning: The shape puntosCR contains empty units.
 
 ## Warning: The shape puntosCR contains empty units.
@@ -174,9 +174,14 @@ tmap::tmap_arrange(MapaGenero, MapaNacionalidad, MapaEdad, MapaVictima)
 ## Warning: The shape puntosCR contains empty units.
 
 ## Warning: The shape puntosCR contains empty units.
-
+## Some legend labels were too wide. These labels have been resized to 0.64, 0.36, 0.34. Increase legend.width (argument of tm_layout) to make the legend wider and therefore the labels larger.
 ## Warning: The shape puntosCR contains empty units.
-
-## Warning: The shape puntosCR contains empty units.</code></pre>
+## Some legend labels were too wide. These labels have been resized to 0.47. Increase legend.width (argument of tm_layout) to make the legend wider and therefore the labels larger.
+## Warning: The shape puntosCR contains empty units.
+## Some legend labels were too wide. These labels have been resized to 0.60, 0.58, 0.62, 0.51, 0.40, 0.55, 0.59. Increase legend.width (argument of tm_layout) to make the legend wider and therefore the labels larger.
+## Warning: The shape puntosCR contains empty units.
+## Some legend labels were too wide. These labels have been resized to 0.60, 0.62, 0.54, 0.54. Increase legend.width (argument of tm_layout) to make the legend wider and therefore the labels larger.
+## Warning: The shape puntosCR contains empty units.
+## Some legend labels were too wide. These labels have been resized to 0.55. Increase legend.width (argument of tm_layout) to make the legend wider and therefore the labels larger.</code></pre>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
 </div>
