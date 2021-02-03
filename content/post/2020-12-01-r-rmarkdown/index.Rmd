@@ -29,9 +29,13 @@ para su uso
 Los elementos a visualizar en este caso serán Distritos de Costa Rica, 
 categorizados por las estadísticas policiales 2020  
 
-# Estadísticas por Delito:
+# Todos los mapas generados:
+
+
+# Estadísticas por Delito, Estadísticas por Género de la Victima:
 
 ```{r}
+setwd("C:/Users/anagu/OneDrive/Documentos/TEC/SemestreII2020/SIG/sig-proyecto2-ChesGuev99")
 
 library(sf)
 
@@ -47,19 +51,7 @@ MapaTipoCrimen = (tmap::tm_shape(puntosCR)+
   tmap::tm_compass(bg.alpha = 0,bg.color = 'lightblue' ,size = 4, 
                    show.labels = 2, type = 'rose', position = c('right','bottom')) )
 
-tmap::tmap_arrange(MapaTipoCrimen)
-```
 
-# Estadísticas de Crimen en relación al género de la vícitma:
-
-```{r}
-
-library(sf)
-
-puntosCR <- st_read("DistritosEdited.shp")
-breaks = c(0,3,4,5)
-
-  
 MapaGenero = (tmap::tm_shape(puntosCR)+
   tmap::tmap_style('watercolor')+
   tmap::tm_fill(title = 'Crimen y Género', col='estadsti_3', palette = c('grey70','royalblue1','orchid1')) +
@@ -71,12 +63,13 @@ MapaGenero = (tmap::tm_shape(puntosCR)+
 
 
 
-tmap::tmap_arrange(MapaGenero)
+tmap::tmap_arrange(MapaTipoCrimen, MapaGenero)
 ```
 
-# Estadísticas de crimen en relación al tipo de víctima:
+# Estadísticas en relación al tipo de víctima, Estadísticas respecto a Nacionalidad:
 
 ```{r}
+setwd("C:/Users/anagu/OneDrive/Documentos/TEC/SemestreII2020/SIG/sig-proyecto2-ChesGuev99")
 
 library(sf)
 
@@ -86,24 +79,12 @@ breaks = c(0,3,4,5)
 MapaVictima = (tmap::tm_shape(puntosCR)+
   tmap::tmap_style('beaver')+
   tmap::tm_fill(title = 'Crimen y Afectado', col='estadsti_1', palette = 'Set3') +
-  tmap::tm_layout(legend.title.color = 'mistyrose4',bg.color = 'darkslategray4', 
+  tmap::tm_layout(legend.title.color = 'black',bg.color = 'darkslategray4', 
                   main.title.color = 'mistyrose4',main.title="Crimen En Costa Rica", 
-                  legend.position = c('left', 'bottom'), frame = 'mistyrose4', frame.double.line = TRUE) + 
+                  legend.position = c('left', 'bottom'), frame = 'black', frame.double.line = TRUE) + 
   tmap::tm_compass(bg.alpha = 0,bg.color = 'lightcyan' ,size = 4, 
                    show.labels = 2, type = '8star', position = c('right','bottom')) )
 
-
-tmap::tmap_arrange(MapaVictima)
-```
-
-# Estadísticas de crimen en relación a la nacionalidad de la víctima:
-
-```{r}
-
-library(sf)
-
-puntosCR <- st_read("DistritosEdited.shp")
-breaks = c(0,3,4,5)
 
 MapaNacionalidad = (tmap::tm_shape(puntosCR)+
   tmap::tmap_style('beaver')+
@@ -114,12 +95,13 @@ MapaNacionalidad = (tmap::tm_shape(puntosCR)+
   tmap::tm_compass(bg.alpha = 0,bg.color = 'lightcyan' ,size = 4, 
                    show.labels = 2, type = 'arrow', position = c('right','bottom')) )
 
-tmap::tmap_arrange(MapaNacionalidad)
+tmap::tmap_arrange(MapaVictima ,MapaNacionalidad)
 ```
 
 # Estadísticas de crimen en relación a la edad de la víctima:
 
 ```{r}
+setwd("C:/Users/anagu/OneDrive/Documentos/TEC/SemestreII2020/SIG/sig-proyecto2-ChesGuev99")
 
 library(sf)
 
@@ -132,10 +114,12 @@ MapaEdad = (tmap::tm_shape(puntosCR)+
   tmap::tm_layout(legend.title.color = 'navy',bg.color = 'navy', 
                   main.title.color = 'navy',main.title="Crimen En Costa Rica", legend.bg.color = 'paleturquoise', 
                   legend.position = c('left', 'bottom'), frame = 'paleturquoise', frame.double.line = TRUE) + 
-  tmap::tm_compass(bg.alpha = 0,bg.color = 'lightcyan' ,size = 4, 
+  tmap::tm_compass(bg.alpha = 0,bg.color = 'lightcyan' ,size = 4, text.color = 'paleturquoise',
                    show.labels = 2, type = 'radar', position = c('right','bottom')) )
 
 
 
 tmap::tmap_arrange(MapaEdad)
 ```
+
+
