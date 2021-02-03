@@ -62,10 +62,12 @@ MapaEdad = tmap::tm_shape(puntosCR)+
                    show.labels = 2, type = 'radar', position = c('right','bottom')) 
 
 
+#tmap::tmap_arrange(MapaTipoCrimen,MapaVictima,MapaEdad,MapaGenero,MapaNacionalidad)
+
 
 
 # TIPO DE CRIMEN
-map<- mapview::mapview(puntosCR, alpha.regions = 10, col.regions = palette.colors(palette = 'Set3'), map.types = c('CartoDB.DarkMatter','CartoDB.Positron') , 
+mapview::mapview(puntosCR, alpha.regions = 10, col.regions = palette.colors(palette = 'Set3'), map.types = c('CartoDB.DarkMatter','CartoDB.Positron') , 
                  layer.name= 'Tipo De Crimen', zcol = "estadstica" ,
   popup = popupTable(puntosCR, zcol=c("NOM_PROV","NOM_CANT","NOM_DIST", 'COD_DIST',
   'estadstica', 'estadsti_1', 'estadsti_2', 'estadsti_3', 'estadsti_4'))) +
