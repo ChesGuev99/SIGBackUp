@@ -92,10 +92,9 @@ map <- mapview::mapview(puntosCR, alpha.regions = 10, col.regions = palette.colo
                    layer.name= 'Nacionalidad', zcol = "estadsti_4" ,
                    popup = popupTable(puntosCR, zcol=c("NOM_PROV","NOM_CANT","NOM_DIST", 'COD_DIST',
                                                        'estadstica', 'estadsti_1', 'estadsti_2', 'estadsti_3', 'estadsti_4'))) 
-mapview::mapshot(map, url = paste0(getwd(), "/map.html"))
 
 
-mapshot(map, url = paste0(getwd(), "/map.html"), selfcontained = TRUE)
+#mapshot(map, url = paste0(getwd(), "/map.html"), selfcontained = TRUE)
 
-#print(puntosCR)
+print(map)
 

@@ -9,8 +9,174 @@ tags: []
 <script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
 
 
-<div id="estadísticas-por-delito-estadísticas-por-género-de-la-victima" class="section level1">
-<h1>Estadísticas por Delito, Estadísticas por Género de la Victima:</h1>
+<div id="estadísticas-de-crimen-en-costa-rica" class="section level1">
+<h1>Estadísticas de crimen en Costa Rica:</h1>
+<pre class="r"><code>setwd(&quot;C:/Users/anagu/OneDrive/Documentos/TEC/SemestreII2020/SIG/sig-proyecto2-ChesGuev99&quot;)
+
+library(sf)
+## Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+library(dplyr)
+## 
+## Attaching package: &#39;dplyr&#39;
+## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag
+## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union
+library(leaflet)
+library(leafpop)
+library(RColorBrewer)
+library(mapview)
+
+puntosCR &lt;- st_read(&quot;DistritosEdited.shp&quot;)
+## Reading layer `DistritosEdited&#39; from data source `C:\Users\anagu\OneDrive\Documentos\TEC\SemestreII2020\SIG\sig-proyecto2-ChesGuev99\DistritosEdited.shp&#39; using driver `ESRI Shapefile&#39;
+## replacing null geometries with empty geometries
+## Simple feature collection with 682 features and 14 fields (with 2 geometries empty)
+## geometry type:  POLYGON
+## dimension:      XY
+## bbox:           xmin: -87.10181 ymin: 5.500077 xmax: -82.55248 ymax: 11.21976
+## geographic CRS: WGS 84
+print(puntosCR)
+## Simple feature collection with 682 features and 14 fields (with 2 geometries empty)
+## geometry type:  POLYGON
+## dimension:      XY
+## bbox:           xmin: -87.10181 ymin: 5.500077 xmax: -82.55248 ymax: 11.21976
+## geographic CRS: WGS 84
+## First 10 features:
+##    OBJECTID COD_PROV COD_CANT COD_DIST CODIGO   NOM_PROV   NOM_CANT
+## 1         1        6        1       10  60110 PUNTARENAS PUNTARENAS
+## 2         2        6        1       10  60110 PUNTARENAS PUNTARENAS
+## 3         3        6        1       10  60110 PUNTARENAS PUNTARENAS
+## 4         4        6        1       10  60110 PUNTARENAS PUNTARENAS
+## 5         5        6        1       10  60110 PUNTARENAS PUNTARENAS
+## 6         6        6        1       10  60110 PUNTARENAS PUNTARENAS
+## 7         7        6        1       10  60110 PUNTARENAS PUNTARENAS
+## 8         8        6        1       10  60110 PUNTARENAS PUNTARENAS
+## 9         9        6        1       10  60110 PUNTARENAS PUNTARENAS
+## 10       10        6        1       10  60110 PUNTARENAS PUNTARENAS
+##         NOM_DIST ID estadstica estadsti_1 estadsti_2 estadsti_3 estadsti_4
+## 1  ISLA DEL COCO  1       &lt;NA&gt;       &lt;NA&gt;       &lt;NA&gt;       &lt;NA&gt;       &lt;NA&gt;
+## 2  ISLA DEL COCO  2       &lt;NA&gt;       &lt;NA&gt;       &lt;NA&gt;       &lt;NA&gt;       &lt;NA&gt;
+## 3  ISLA DEL COCO  3       &lt;NA&gt;       &lt;NA&gt;       &lt;NA&gt;       &lt;NA&gt;       &lt;NA&gt;
+## 4  ISLA DEL COCO  4       &lt;NA&gt;       &lt;NA&gt;       &lt;NA&gt;       &lt;NA&gt;       &lt;NA&gt;
+## 5  ISLA DEL COCO  5       &lt;NA&gt;       &lt;NA&gt;       &lt;NA&gt;       &lt;NA&gt;       &lt;NA&gt;
+## 6  ISLA DEL COCO  6       &lt;NA&gt;       &lt;NA&gt;       &lt;NA&gt;       &lt;NA&gt;       &lt;NA&gt;
+## 7  ISLA DEL COCO  7       &lt;NA&gt;       &lt;NA&gt;       &lt;NA&gt;       &lt;NA&gt;       &lt;NA&gt;
+## 8  ISLA DEL COCO  8       &lt;NA&gt;       &lt;NA&gt;       &lt;NA&gt;       &lt;NA&gt;       &lt;NA&gt;
+## 9  ISLA DEL COCO  9       &lt;NA&gt;       &lt;NA&gt;       &lt;NA&gt;       &lt;NA&gt;       &lt;NA&gt;
+## 10 ISLA DEL COCO 10       &lt;NA&gt;       &lt;NA&gt;       &lt;NA&gt;       &lt;NA&gt;       &lt;NA&gt;
+##                          geometry
+## 1  POLYGON ((-87.05503 5.51346...
+## 2  POLYGON ((-87.04893 5.51728...
+## 3  POLYGON ((-87.02957 5.54166...
+## 4  POLYGON ((-87.031 5.545335,...
+## 5  POLYGON ((-87.03172 5.54763...
+## 6  POLYGON ((-87.03538 5.55138...
+## 7  POLYGON ((-87.0642 5.550841...
+## 8  POLYGON ((-87.06226 5.54382...
+## 9  POLYGON ((-87.08378 5.53710...
+## 10 POLYGON ((-87.09299 5.51568...
+#plot(puntosCR[&quot;prov_id&quot;],col = &quot;red&quot;)
+JustMapa = tmap::tm_shape(puntosCR)+tmap::tm_fill(title = &#39;Tipo de Crimen&#39;)+tmap::tm_polygons(col=&#39;estadistica&#39;)
+breaks = c(0,3,4,5)
+
+
+MapaTipoCrimen = tmap::tm_shape(puntosCR)+
+  tmap::tm_style(&quot;classic&quot;, sepia.intensity = 0.1)+
+  tmap::tm_fill(title = &#39;Tipo de Crimen&#39;, col=&#39;estadstica&#39;, palette = &#39;RdYlBu&#39;) +
+  tmap::tm_layout(bg.color = &#39;lightblue&#39;, main.title=&quot;Crimen En Costa Rica&quot;,
+                  legend.position = c(&#39;left&#39;, &#39;center&#39;)) + 
+  tmap::tm_compass(bg.alpha = 0,bg.color = &#39;lightblue&#39; ,size = 4, 
+                   show.labels = 2, type = &#39;rose&#39;, position = c(&#39;right&#39;,&#39;bottom&#39;)) 
+  
+MapaGenero = tmap::tm_shape(puntosCR)+
+  tmap::tmap_style(&#39;watercolor&#39;)+
+  tmap::tm_fill(title = &#39;Crimen y Género&#39;, col=&#39;estadsti_3&#39;, palette = c(&#39;grey70&#39;,&#39;royalblue1&#39;,&#39;orchid1&#39;)) +
+  tmap::tm_layout(legend.title.color = &#39;royalblue1&#39;,bg.color = &#39;lightcyan&#39;,
+                  main.title.color = &#39;midnightblue&#39;,main.title=&quot;Crimen En Costa Rica&quot;, 
+                  legend.position = c(&#39;right&#39;, &#39;bottom&#39;), frame = &#39;orchid1&#39;, frame.double.line = TRUE) + 
+  tmap::tm_compass(bg.alpha = 0,bg.color = &#39;lightcyan&#39; ,size = 6, 
+                   show.labels = 2, type = &#39;4star&#39;, position = c(&#39;left&#39;,&#39;bottom&#39;)) 
+## tmap style set to &quot;watercolor&quot;
+## other available styles are: &quot;white&quot;, &quot;gray&quot;, &quot;natural&quot;, &quot;cobalt&quot;, &quot;col_blind&quot;, &quot;albatross&quot;, &quot;beaver&quot;, &quot;bw&quot;, &quot;classic&quot;
+
+
+MapaNacionalidad = tmap::tm_shape(puntosCR)+
+  tmap::tmap_style(&#39;beaver&#39;)+
+  tmap::tm_fill(title = &#39;Crimen y Nacionalidad&#39;, col=&#39;estadsti_4&#39;, palette = &#39;BrBG&#39;) +
+  tmap::tm_layout(legend.title.color = &#39;mistyrose4&#39;,bg.color = &#39;mintcream&#39;, 
+                  main.title.color = &#39;mistyrose4&#39;,main.title=&quot;Crimen En Costa Rica&quot;, 
+                  legend.position = c(&#39;left&#39;, &#39;bottom&#39;), frame = &#39;mistyrose4&#39;, frame.double.line = TRUE) + 
+  tmap::tm_compass(bg.alpha = 0,bg.color = &#39;lightcyan&#39; ,size = 4, 
+                   show.labels = 2, type = &#39;arrow&#39;, position = c(&#39;right&#39;,&#39;bottom&#39;)) 
+## tmap style set to &quot;beaver&quot;
+## other available styles are: &quot;white&quot;, &quot;gray&quot;, &quot;natural&quot;, &quot;cobalt&quot;, &quot;col_blind&quot;, &quot;albatross&quot;, &quot;bw&quot;, &quot;classic&quot;, &quot;watercolor&quot;
+
+
+MapaVictima = tmap::tm_shape(puntosCR)+
+  tmap::tmap_style(&#39;beaver&#39;)+
+  tmap::tm_fill(title = &#39;Crimen y Afectado&#39;, col=&#39;estadsti_1&#39;, palette = &#39;Set3&#39;) +
+  tmap::tm_layout(legend.title.color = &#39;mistyrose4&#39;,bg.color = &#39;darkslategray4&#39;, 
+                  main.title.color = &#39;mistyrose4&#39;,main.title=&quot;Crimen En Costa Rica&quot;, 
+                  legend.position = c(&#39;left&#39;, &#39;bottom&#39;), frame = &#39;mistyrose4&#39;, frame.double.line = TRUE) + 
+  tmap::tm_compass(bg.alpha = 0,bg.color = &#39;lightcyan&#39; ,size = 4, 
+                   show.labels = 2, type = &#39;8star&#39;, position = c(&#39;right&#39;,&#39;bottom&#39;)) 
+## tmap style set to &quot;beaver&quot;
+## other available styles are: &quot;white&quot;, &quot;gray&quot;, &quot;natural&quot;, &quot;cobalt&quot;, &quot;col_blind&quot;, &quot;albatross&quot;, &quot;bw&quot;, &quot;classic&quot;, &quot;watercolor&quot;
+
+
+MapaEdad = tmap::tm_shape(puntosCR)+
+  tmap::tmap_style(&#39;beaver&#39;)+
+  tmap::tm_fill(title = &#39;Crimen y Edad del Afectado&#39;, col=&#39;estadsti_2&#39;, palette = &#39;BrBG&#39;) +
+  tmap::tm_layout(legend.title.color = &#39;navy&#39;,bg.color = &#39;navy&#39;, 
+                  main.title.color = &#39;navy&#39;,main.title=&quot;Crimen En Costa Rica&quot;, legend.bg.color = &#39;paleturquoise&#39;, 
+                  legend.position = c(&#39;left&#39;, &#39;bottom&#39;), frame = &#39;paleturquoise&#39;, frame.double.line = TRUE) + 
+  tmap::tm_compass(bg.alpha = 0,bg.color = &#39;lightcyan&#39; ,size = 4, 
+                   show.labels = 2, type = &#39;radar&#39;, position = c(&#39;right&#39;,&#39;bottom&#39;)) 
+## tmap style set to &quot;beaver&quot;
+## other available styles are: &quot;white&quot;, &quot;gray&quot;, &quot;natural&quot;, &quot;cobalt&quot;, &quot;col_blind&quot;, &quot;albatross&quot;, &quot;bw&quot;, &quot;classic&quot;, &quot;watercolor&quot;
+
+
+#tmap::tmap_arrange(MapaTipoCrimen,MapaVictima,MapaEdad,MapaGenero,MapaNacionalidad)
+
+
+
+# TIPO DE CRIMEN
+map &lt;- mapview::mapview(puntosCR, alpha.regions = 10, col.regions = palette.colors(palette = &#39;Set3&#39;), map.types = c(&#39;CartoDB.DarkMatter&#39;,&#39;CartoDB.Positron&#39;) , 
+                 layer.name= &#39;Tipo De Crimen&#39;, zcol = &quot;estadstica&quot; ,
+  popup = popupTable(puntosCR, zcol=c(&quot;NOM_PROV&quot;,&quot;NOM_CANT&quot;,&quot;NOM_DIST&quot;, &#39;COD_DIST&#39;,
+  &#39;estadstica&#39;, &#39;estadsti_1&#39;, &#39;estadsti_2&#39;, &#39;estadsti_3&#39;, &#39;estadsti_4&#39;))) +
+
+# Victima
+  mapview::mapview(puntosCR, alpha.regions = 10, col.regions = palette.colors(palette = &#39;Accent&#39;), map.types = c(&#39;CartoDB.DarkMatter&#39;,&#39;CartoDB.Positron&#39;) , 
+                   layer.name= &#39;Victima&#39;, zcol = &quot;estadsti_1&quot; ,
+                   popup = popupTable(puntosCR, zcol=c(&quot;NOM_PROV&quot;,&quot;NOM_CANT&quot;,&quot;NOM_DIST&quot;, &#39;COD_DIST&#39;,
+                                                       &#39;estadstica&#39;, &#39;estadsti_1&#39;, &#39;estadsti_2&#39;, &#39;estadsti_3&#39;, &#39;estadsti_4&#39;))) +
+# Edad
+  mapview::mapview(puntosCR, alpha.regions = 10, map.types = c(&#39;CartoDB.DarkMatter&#39;,&#39;CartoDB.Positron&#39;) , 
+                   layer.name= &#39;Edad&#39;, zcol = &quot;estadsti_2&quot; ,
+                   popup = popupTable(puntosCR, zcol=c(&quot;NOM_PROV&quot;,&quot;NOM_CANT&quot;,&quot;NOM_DIST&quot;, &#39;COD_DIST&#39;,
+                                                       &#39;estadstica&#39;, &#39;estadsti_1&#39;, &#39;estadsti_2&#39;, &#39;estadsti_3&#39;, &#39;estadsti_4&#39;))) +
+# Genero
+  mapview::mapview(puntosCR, alpha.regions = 10, col.regions = c(&#39;khaki&#39;,&#39;violetred&#39;, &#39;skyblue3&#39;), map.types = c(&#39;CartoDB.DarkMatter&#39;,&#39;CartoDB.Positron&#39;) , 
+                   layer.name= &#39;Género&#39;, zcol = &quot;estadsti_3&quot; ,
+                   popup = popupTable(puntosCR, zcol=c(&quot;NOM_PROV&quot;,&quot;NOM_CANT&quot;,&quot;NOM_DIST&quot;, &#39;COD_DIST&#39;,
+                                                       &#39;estadstica&#39;, &#39;estadsti_1&#39;, &#39;estadsti_2&#39;, &#39;estadsti_3&#39;, &#39;estadsti_4&#39;))) +
+# Nacionalidad
+  mapview::mapview(puntosCR, alpha.regions = 10, col.regions = brewer.pal(10, &#39;Dark2&#39;), map.types = c(&#39;CartoDB.DarkMatter&#39;,&#39;CartoDB.Positron&#39;) , 
+                   layer.name= &#39;Nacionalidad&#39;, zcol = &quot;estadsti_4&quot; ,
+                   popup = popupTable(puntosCR, zcol=c(&quot;NOM_PROV&quot;,&quot;NOM_CANT&quot;,&quot;NOM_DIST&quot;, &#39;COD_DIST&#39;,
+                                                       &#39;estadstica&#39;, &#39;estadsti_1&#39;, &#39;estadsti_2&#39;, &#39;estadsti_3&#39;, &#39;estadsti_4&#39;))) 
+## Warning: Found less unique colors (3) than unique zcol values (4)! 
+## Recycling color vector.
+## Warning in brewer.pal(10, &quot;Dark2&quot;): n too large, allowed maximum for palette Dark2 is 8
+## Returning the palette you asked for with that many colors
+## Warning: Found less unique colors (8) than unique zcol values (11)! 
+## Recycling color vector.
+
+
+#mapshot(map, url = paste0(getwd(), &quot;/map.html&quot;), selfcontained = TRUE)</code></pre>
 <iframe src="file:///C:/Users/anagu/OneDrive/Documentos/TEC/SemestreII2020/SIG/sig-proyecto2-ChesGuev99/map.html" height="450" frameborder="0" style="border:0" allowfullscreen>
 </iframe>
 </div>
