@@ -28,135 +28,13 @@ categorizados por las estadísticas policiales 2020</p>
 </div>
 <div id="estadísticas-por-delito-estadísticas-por-género-de-la-victima" class="section level1">
 <h1>Estadísticas por Delito, Estadísticas por Género de la Victima:</h1>
-<pre class="r"><code>setwd(&quot;C:/Users/anagu/OneDrive/Documentos/TEC/SemestreII2020/SIG/sig-proyecto2-ChesGuev99&quot;)
-
-library(sf)
-## Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
-
-puntosCR &lt;- st_read(&quot;DistritosEdited.shp&quot;)
-## Reading layer `DistritosEdited&#39; from data source `C:\Users\anagu\OneDrive\Documentos\TEC\SemestreII2020\SIG\sig-proyecto2-ChesGuev99\DistritosEdited.shp&#39; using driver `ESRI Shapefile&#39;
-## replacing null geometries with empty geometries
-## Simple feature collection with 682 features and 14 fields (with 2 geometries empty)
-## geometry type:  POLYGON
-## dimension:      XY
-## bbox:           xmin: -87.10181 ymin: 5.500077 xmax: -82.55248 ymax: 11.21976
-## geographic CRS: WGS 84
-breaks = c(0,3,4,5)
-
-
-MapaTipoCrimen = (tmap::tm_shape(puntosCR)+
-  tmap::tm_style(&quot;classic&quot;, sepia.intensity = 0.1)+
-  tmap::tm_fill(title = &#39;Tipo de Crimen&#39;, col=&#39;estadstica&#39;, palette = &#39;RdYlBu&#39;) +
-  tmap::tm_layout(bg.color = &#39;lightblue&#39;, main.title=&quot;Crimen En Costa Rica&quot;,
-                  legend.position = c(&#39;left&#39;, &#39;center&#39;)) + 
-  tmap::tm_compass(bg.alpha = 0,bg.color = &#39;lightblue&#39; ,size = 4, 
-                   show.labels = 2, type = &#39;rose&#39;, position = c(&#39;right&#39;,&#39;bottom&#39;)) )
-
-
-MapaGenero = (tmap::tm_shape(puntosCR)+
-  tmap::tmap_style(&#39;watercolor&#39;)+
-  tmap::tm_fill(title = &#39;Crimen y Género&#39;, col=&#39;estadsti_3&#39;, palette = c(&#39;grey70&#39;,&#39;royalblue1&#39;,&#39;orchid1&#39;)) +
-  tmap::tm_layout(legend.title.color = &#39;royalblue1&#39;,bg.color = &#39;lightcyan&#39;,
-                  main.title.color = &#39;midnightblue&#39;,main.title=&quot;Crimen En Costa Rica&quot;, 
-                  legend.position = c(&#39;right&#39;, &#39;bottom&#39;), frame = &#39;orchid1&#39;, frame.double.line = TRUE) + 
-  tmap::tm_compass(bg.alpha = 0,bg.color = &#39;lightcyan&#39; ,size = 6, 
-                   show.labels = 2, type = &#39;4star&#39;, position = c(&#39;left&#39;,&#39;bottom&#39;))) 
-## tmap style set to &quot;watercolor&quot;
-## other available styles are: &quot;white&quot;, &quot;gray&quot;, &quot;natural&quot;, &quot;cobalt&quot;, &quot;col_blind&quot;, &quot;albatross&quot;, &quot;beaver&quot;, &quot;bw&quot;, &quot;classic&quot;
-
-
-
-tmap::tmap_arrange(MapaTipoCrimen, MapaGenero)
-## Warning: The shape puntosCR contains empty units.
-
-## Warning: The shape puntosCR contains empty units.
-
-## Warning: The shape puntosCR contains empty units.
-## Some legend labels were too wide. These labels have been resized to 0.62, 0.59. Increase legend.width (argument of tm_layout) to make the legend wider and therefore the labels larger.
-## Warning: The shape puntosCR contains empty units.</code></pre>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
 </div>
 <div id="estadísticas-en-relación-al-tipo-de-víctima-estadísticas-respecto-a-nacionalidad" class="section level1">
 <h1>Estadísticas en relación al tipo de víctima, Estadísticas respecto a Nacionalidad:</h1>
-<pre class="r"><code>setwd(&quot;C:/Users/anagu/OneDrive/Documentos/TEC/SemestreII2020/SIG/sig-proyecto2-ChesGuev99&quot;)
-
-library(sf)
-
-puntosCR &lt;- st_read(&quot;DistritosEdited.shp&quot;)
-## Reading layer `DistritosEdited&#39; from data source `C:\Users\anagu\OneDrive\Documentos\TEC\SemestreII2020\SIG\sig-proyecto2-ChesGuev99\DistritosEdited.shp&#39; using driver `ESRI Shapefile&#39;
-## replacing null geometries with empty geometries
-## Simple feature collection with 682 features and 14 fields (with 2 geometries empty)
-## geometry type:  POLYGON
-## dimension:      XY
-## bbox:           xmin: -87.10181 ymin: 5.500077 xmax: -82.55248 ymax: 11.21976
-## geographic CRS: WGS 84
-breaks = c(0,3,4,5)
-
-MapaVictima = (tmap::tm_shape(puntosCR)+
-  tmap::tmap_style(&#39;beaver&#39;)+
-  tmap::tm_fill(title = &#39;Crimen y Afectado&#39;, col=&#39;estadsti_1&#39;, palette = &#39;Set3&#39;) +
-  tmap::tm_layout(legend.title.color = &#39;black&#39;,bg.color = &#39;darkslategray4&#39;, 
-                  main.title.color = &#39;mistyrose4&#39;,main.title=&quot;Crimen En Costa Rica&quot;, 
-                  legend.position = c(&#39;left&#39;, &#39;bottom&#39;), frame = &#39;black&#39;, frame.double.line = TRUE) + 
-  tmap::tm_compass(bg.alpha = 0,bg.color = &#39;lightcyan&#39; ,size = 4, 
-                   show.labels = 2, type = &#39;8star&#39;, position = c(&#39;right&#39;,&#39;bottom&#39;)) )
-## tmap style set to &quot;beaver&quot;
-## other available styles are: &quot;white&quot;, &quot;gray&quot;, &quot;natural&quot;, &quot;cobalt&quot;, &quot;col_blind&quot;, &quot;albatross&quot;, &quot;bw&quot;, &quot;classic&quot;, &quot;watercolor&quot;
-
-
-MapaNacionalidad = (tmap::tm_shape(puntosCR)+
-  tmap::tmap_style(&#39;beaver&#39;)+
-  tmap::tm_fill(title = &#39;Crimen y Nacionalidad&#39;, col=&#39;estadsti_4&#39;, palette = &#39;BrBG&#39;) +
-  tmap::tm_layout(legend.title.color = &#39;mistyrose4&#39;,bg.color = &#39;mintcream&#39;, 
-                  main.title.color = &#39;mistyrose4&#39;,main.title=&quot;Crimen En Costa Rica&quot;, 
-                  legend.position = c(&#39;left&#39;, &#39;bottom&#39;), frame = &#39;mistyrose4&#39;, frame.double.line = TRUE) + 
-  tmap::tm_compass(bg.alpha = 0,bg.color = &#39;lightcyan&#39; ,size = 4, 
-                   show.labels = 2, type = &#39;arrow&#39;, position = c(&#39;right&#39;,&#39;bottom&#39;)) )
-## tmap style set to &quot;beaver&quot;
-## other available styles are: &quot;white&quot;, &quot;gray&quot;, &quot;natural&quot;, &quot;cobalt&quot;, &quot;col_blind&quot;, &quot;albatross&quot;, &quot;bw&quot;, &quot;classic&quot;, &quot;watercolor&quot;
-
-tmap::tmap_arrange(MapaVictima ,MapaNacionalidad)
-## Warning: The shape puntosCR contains empty units.
-
-## Warning: The shape puntosCR contains empty units.
-
-## Warning: The shape puntosCR contains empty units.
-
-## Warning: The shape puntosCR contains empty units.</code></pre>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 </div>
 <div id="estadísticas-de-crimen-en-relación-a-la-edad-de-la-víctima" class="section level1">
 <h1>Estadísticas de crimen en relación a la edad de la víctima:</h1>
-<pre class="r"><code>setwd(&quot;C:/Users/anagu/OneDrive/Documentos/TEC/SemestreII2020/SIG/sig-proyecto2-ChesGuev99&quot;)
-
-library(sf)
-
-puntosCR &lt;- st_read(&quot;DistritosEdited.shp&quot;)
-## Reading layer `DistritosEdited&#39; from data source `C:\Users\anagu\OneDrive\Documentos\TEC\SemestreII2020\SIG\sig-proyecto2-ChesGuev99\DistritosEdited.shp&#39; using driver `ESRI Shapefile&#39;
-## replacing null geometries with empty geometries
-## Simple feature collection with 682 features and 14 fields (with 2 geometries empty)
-## geometry type:  POLYGON
-## dimension:      XY
-## bbox:           xmin: -87.10181 ymin: 5.500077 xmax: -82.55248 ymax: 11.21976
-## geographic CRS: WGS 84
-breaks = c(0,3,4,5)
-
-MapaEdad = (tmap::tm_shape(puntosCR)+
-  tmap::tmap_style(&#39;beaver&#39;)+
-  tmap::tm_fill(title = &#39;Crimen y Edad del Afectado&#39;, col=&#39;estadsti_2&#39;, palette = &#39;BrBG&#39;) +
-  tmap::tm_layout(legend.title.color = &#39;navy&#39;,bg.color = &#39;navy&#39;, 
-                  main.title.color = &#39;navy&#39;,main.title=&quot;Crimen En Costa Rica&quot;, legend.bg.color = &#39;paleturquoise&#39;, 
-                  legend.position = c(&#39;left&#39;, &#39;bottom&#39;), frame = &#39;paleturquoise&#39;, frame.double.line = TRUE) + 
-  tmap::tm_compass(bg.alpha = 0,bg.color = &#39;lightcyan&#39; ,size = 4, text.color = &#39;paleturquoise&#39;,
-                   show.labels = 2, type = &#39;radar&#39;, position = c(&#39;right&#39;,&#39;bottom&#39;)) )
-## tmap style set to &quot;beaver&quot;
-## other available styles are: &quot;white&quot;, &quot;gray&quot;, &quot;natural&quot;, &quot;cobalt&quot;, &quot;col_blind&quot;, &quot;albatross&quot;, &quot;bw&quot;, &quot;classic&quot;, &quot;watercolor&quot;
-
-
-
-tmap::tmap_arrange(MapaEdad)
-## Warning: The shape puntosCR contains empty units.
-
-## Warning: The shape puntosCR contains empty units.</code></pre>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 </div>
