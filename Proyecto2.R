@@ -5,7 +5,7 @@ library(dplyr)
 library(leaflet)
 library(leafpop)
 library(RColorBrewer)
-
+library(mapview)
 
 puntosCR <- st_read("DistritosEdited.shp")
 print(puntosCR)
@@ -65,7 +65,7 @@ MapaEdad = tmap::tm_shape(puntosCR)+
 
 
 # TIPO DE CRIMEN
-mapview::mapview(puntosCR, alpha.regions = 10, col.regions = palette.colors(palette = 'Set3'), map.types = c('CartoDB.DarkMatter','CartoDB.Positron') , 
+map<- mapview::mapview(puntosCR, alpha.regions = 10, col.regions = palette.colors(palette = 'Set3'), map.types = c('CartoDB.DarkMatter','CartoDB.Positron') , 
                  layer.name= 'Tipo De Crimen', zcol = "estadstica" ,
   popup = popupTable(puntosCR, zcol=c("NOM_PROV","NOM_CANT","NOM_DIST", 'COD_DIST',
   'estadstica', 'estadsti_1', 'estadsti_2', 'estadsti_3', 'estadsti_4'))) +
@@ -90,6 +90,7 @@ mapview::mapview(puntosCR, alpha.regions = 10, col.regions = palette.colors(pale
                    layer.name= 'Nacionalidad', zcol = "estadsti_4" ,
                    popup = popupTable(puntosCR, zcol=c("NOM_PROV","NOM_CANT","NOM_DIST", 'COD_DIST',
                                                        'estadstica', 'estadsti_1', 'estadsti_2', 'estadsti_3', 'estadsti_4'))) 
+mapview::mapshot(map, url = paste0(getwd(), "/map.html"))
 
 
 #print(puntosCR)
