@@ -1,6 +1,11 @@
 setwd("C:/Users/anagu/OneDrive/Documentos/TEC/SemestreII2020/SIG/sig-proyecto2-ChesGuev99")
 
 library(sf)
+library(dplyr)
+library(leaflet)
+library(leafpop)
+library(RColorBrewer)
+
 
 puntosCR <- st_read("DistritosEdited.shp")
 print(puntosCR)
@@ -37,8 +42,6 @@ MapaNacionalidad = tmap::tm_shape(puntosCR)+
                    show.labels = 2, type = 'arrow', position = c('right','bottom')) 
 
 
-## Falta 
-
 MapaVictima = tmap::tm_shape(puntosCR)+
   tmap::tmap_style('beaver')+
   tmap::tm_fill(title = 'Crimen y Afectado', col='estadsti_1', palette = 'Set3') +
@@ -60,11 +63,33 @@ MapaEdad = tmap::tm_shape(puntosCR)+
 
 
 
-tmap::tmap_arrange(MapaGenero, MapaNacionalidad, MapaEdad, MapaVictima)
-#hurtos <- subset(puntosCR, subset = estadstica == "ASALTO")
-#tmap::tm_shape(hurtos)+tmap::tm_polygons(col='estadstica', breaks= breaks, palette = 'BuGn')
 
+# TIPO DE CRIMEN
+mapview::mapview(puntosCR, alpha.regions = 10, col.regions = palette.colors(palette = 'Set3'), map.types = c('CartoDB.DarkMatter','CartoDB.Positron') , 
+                 layer.name= 'Tipo De Crimen', zcol = "estadstica" ,
+  popup = popupTable(puntosCR, zcol=c("NOM_PROV","NOM_CANT","NOM_DIST", 'COD_DIST',
+  'estadstica', 'estadsti_1', 'estadsti_2', 'estadsti_3', 'estadsti_4'))) +
 
+# Victima
+  mapview::mapview(puntosCR, alpha.regions = 10, col.regions = palette.colors(palette = 'Accent'), map.types = c('CartoDB.DarkMatter','CartoDB.Positron') , 
+                   layer.name= 'Victima', zcol = "estadsti_1" ,
+                   popup = popupTable(puntosCR, zcol=c("NOM_PROV","NOM_CANT","NOM_DIST", 'COD_DIST',
+                                                       'estadstica', 'estadsti_1', 'estadsti_2', 'estadsti_3', 'estadsti_4'))) +
+# Edad
+  mapview::mapview(puntosCR, alpha.regions = 10, map.types = c('CartoDB.DarkMatter','CartoDB.Positron') , 
+                   layer.name= 'Edad', zcol = "estadsti_2" ,
+                   popup = popupTable(puntosCR, zcol=c("NOM_PROV","NOM_CANT","NOM_DIST", 'COD_DIST',
+                                                       'estadstica', 'estadsti_1', 'estadsti_2', 'estadsti_3', 'estadsti_4'))) +
+# Genero
+  mapview::mapview(puntosCR, alpha.regions = 10, col.regions = c('khaki','violetred', 'skyblue3'), map.types = c('CartoDB.DarkMatter','CartoDB.Positron') , 
+                   layer.name= 'Género', zcol = "estadsti_3" ,
+                   popup = popupTable(puntosCR, zcol=c("NOM_PROV","NOM_CANT","NOM_DIST", 'COD_DIST',
+                                                       'estadstica', 'estadsti_1', 'estadsti_2', 'estadsti_3', 'estadsti_4'))) +
+# Nacionalidad
+  mapview::mapview(puntosCR, alpha.regions = 10, col.regions = brewer.pal(10, 'Dark2'), map.types = c('CartoDB.DarkMatter','CartoDB.Positron') , 
+                   layer.name= 'Nacionalidad', zcol = "estadsti_4" ,
+                   popup = popupTable(puntosCR, zcol=c("NOM_PROV","NOM_CANT","NOM_DIST", 'COD_DIST',
+                                                       'estadstica', 'estadsti_1', 'estadsti_2', 'estadsti_3', 'estadsti_4'))) 
 
 
 #print(puntosCR)
